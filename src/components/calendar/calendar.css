@@ -2,14 +2,6 @@
   float: left;
   position: relative;
 }
-.MyDatePicker * {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Chrome/Safari/Opera */
-  -khtml-user-select: none; /* Konqueror */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently */
-}
 
 .mdp-input {
   float: left;
@@ -18,9 +10,11 @@
   overflow: hidden;
   border-radius: 20px;
 }
+
 .mdp-input input:focus {
   outline: none;
 }
+
 .mdp-input input {
   width: 130%;
   background: #f5f5f5;

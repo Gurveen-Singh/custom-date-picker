@@ -2,8 +2,9 @@
 
 .App {
   float: left;
-  padding: 200px;
+  margin: 250px;
 }
+
 .App * {
   font-family: "Open Sans", sans-serif;
 }

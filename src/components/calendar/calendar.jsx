@@ -1,4 +1,4 @@
-import React, { Component, createRef } from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import "./calendar.css";
 
@@ -7,7 +7,7 @@ let todayTimestamp =
   Date.now() -
   (Date.now() % oneDay) +
   new Date().getTimezoneOffset() * 1000 * 60;
-let inputRef = createRef();
+let inputRef = React.createRef();
 
 export default class Calendar extends Component {
   state = {
@@ -45,7 +45,7 @@ export default class Calendar extends Component {
     }
   };
 
-  showDatePicker = (showDatePicker = false) => {
+  showDatePicker = (showDatePicker = true) => {
     this.setState({ showDatePicker });
   };
 
@@ -58,7 +58,6 @@ export default class Calendar extends Component {
     "Friday",
     "Saturday",
   ];
-
   monthMap = [
     "January",
     "February",
@@ -75,9 +74,8 @@ export default class Calendar extends Component {
   ];
 
   getDayDetails = (args) => {
-    let date = args.index - args.firstDay + 1;
+    let date = args.index - args.firstDay;
     let day = args.index % 7;
-
     let prevMonth = args.month - 1;
     let prevYear = args.year;
     if (prevMonth < 0) {
@@ -248,7 +246,7 @@ export default class Calendar extends Component {
     return (
       <div className="c-container">
         <div className="cc-head">
-          {["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"].map((d, i) => (
+          {["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].map((d, i) => (
             <div key={i} className="cch-name">
               {d}
             </div>
@@ -269,7 +267,7 @@ export default class Calendar extends Component {
             ref={inputRef}
           />
         </div>
-        {this.state.showDatePicker ? (
+        {true ? (
           <div className="mdp-container">
             <div className="mdpc-head">
               <div className="mdpch-button">
