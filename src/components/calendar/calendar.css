@@ -4,11 +4,10 @@
 }
 
 .mdp-input {
-  float: left;
-  width: 150px;
+  width: 110px;
   height: 35px;
   overflow: hidden;
-  border-radius: 20px;
+  padding: 10px;
 }
 
 .mdp-input input:focus {
@@ -45,16 +44,17 @@
   float: left;
   width: 100%;
   height: 53px;
+  background-color: rgba(236, 95, 39, 0.849);
+  border-radius: 20px;
 }
+
 .mdpc-body {
   float: left;
   width: 100%;
   margin-top: 20px;
+  background-color: rgba(238, 173, 111, 0.849);
+  border-radius: 20px;
 }
-
-/**
-* Controls
-*/
 
 .mdpch-button {
   float: left;
@@ -68,7 +68,7 @@
 }
 .mdpchb-inner:hover {
   cursor: pointer;
-  background: #eee;
+  background: rgb(204, 187, 187);
 }
 .mdpchb-inner {
   float: left;
@@ -141,7 +141,7 @@
   width: 100%;
   height: 30px;
   font-size: 27px;
-  color: #666;
+  color: rgb(255, 255, 255);
   font-weight: 200px;
   text-align: center;
 }
@@ -149,8 +149,8 @@
   float: left;
   width: 100%;
   height: 15px;
-  font-size: 13px;
-  color: #666;
+  font-size: 15px;
+  color: rgb(255, 255, 255);
   font-weight: 200px;
   text-align: center;
 }
@@ -245,13 +245,13 @@
 }
 
 .c-day-container.disabled .cdc-day span {
-  color: #ddd;
+  color: rgb(20, 0, 0);
 }
 .c-day-container.disabled .cdc-day span {
-  background: #fff !important;
+  background: rgb(238, 197, 150) !important;
 }
 .c-day-container.highlight .cdc-day span {
-  background: #efdbca;
+  background: #cad1ef;
 }
 .c-day-container.highlight-green .cdc-day span {
   background: #d4e2cb;

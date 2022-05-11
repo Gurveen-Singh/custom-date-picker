@@ -2,18 +2,25 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import "./calendar.css";
 
+/* Getting the current timestamp. */
 let oneDay = 60 * 60 * 24 * 1000;
 let todayTimestamp =
   Date.now() -
   (Date.now() % oneDay) +
   new Date().getTimezoneOffset() * 1000 * 60;
-let inputRef = React.createRef();
 
+/* Creating a reference to the input element. */
+let inputRef = React.createRef();
 export default class Calendar extends Component {
+  /* A state variable. */
   state = {
     getMonthDetails: [],
   };
 
+  /**
+   * The constructor function is a special function that is called when a new instance of the class is
+   * created.
+   */
   constructor() {
     super();
     let date = new Date();
@@ -27,15 +34,24 @@ export default class Calendar extends Component {
     };
   }
 
+  /**
+   * When the component mounts, add an event listener to the window that listens for a click and then
+   * calls the addBackDrop function. Then, set the date to the input.
+   */
   componentDidMount() {
     window.addEventListener("click", this.addBackDrop);
     this.setDateToInput(this.state.selectedDay);
   }
 
+  /**
+   * When the component is unmounted, remove the event listener that was added to the window object.
+   */
   componentWillUnmount() {
     window.removeEventListener("click", this.addBackDrop);
   }
 
+  /* This is a function that is called when the user clicks on the window. It checks if the date picker
+is open and if the user clicked outside of the date picker. If so, it closes the date picker. */
   addBackDrop = (e) => {
     if (
       this.state.showDatePicker &&
@@ -45,10 +61,13 @@ export default class Calendar extends Component {
     }
   };
 
+  /* This is a function that is called when the user clicks on the window. It checks if the date picker
+is open and if the user clicked outside of the date picker. If so, it closes the date picker. */
   showDatePicker = (showDatePicker = true) => {
     this.setState({ showDatePicker });
   };
 
+  /* Creating an array of the days of the week. */
   daysMap = [
     "Sunday",
     "Monday",
@@ -58,6 +77,8 @@ export default class Calendar extends Component {
     "Friday",
     "Saturday",
   ];
+
+  /* Creating an array of the months of the year. */
   monthMap = [
     "January",
     "February",
@@ -72,7 +93,7 @@ export default class Calendar extends Component {
     "November",
     "December",
   ];
-
+  /* Getting the details of the day. */
   getDayDetails = (args) => {
     let date = args.index - args.firstDay;
     let day = args.index % 7;
@@ -87,6 +108,7 @@ export default class Calendar extends Component {
       (date < 0 ? prevMonthNumberOfDays + date : date % args.numberOfDays) + 1;
     let month = date < 0 ? -1 : date >= args.numberOfDays ? 1 : 0;
     let timestamp = new Date(args.year, args.month, _date).getTime();
+
     return {
       date: _date,
       day,
@@ -96,10 +118,12 @@ export default class Calendar extends Component {
     };
   };
 
+  /* This is a function that returns the number of days in a month. */
   getNumberOfDays = (year, month) => {
-    return 40 - new Date(year, month, 40).getDate();
+    return 32 - new Date(year, month, 32).getDate();
   };
 
+  /* Creating a calendar for the month. */
   getMonthDetails = (year, month) => {
     let firstDay = new Date(year, month).getDay();
     let numberOfDays = this.getNumberOfDays(year, month);
@@ -125,16 +149,19 @@ export default class Calendar extends Component {
     return monthArray;
   };
 
+  /* Checking if the day is the current day. */
   isCurrentDay = (day) => {
     return day.timestamp === todayTimestamp;
   };
 
+  /* Checking if the day is the selected day. */
   isSelectedDay = (day) => {
     return day.timestamp === this.state.selectedDay;
   };
 
+  /* This is a function that takes a date string and returns an object with the year, month, and date. */
   getDateFromDateString = (dateValue) => {
-    let dateData = dateValue.split("-").map((d) => parseInt(d, 10));
+    let dateData = dateValue.split("-").map((d) => parseInt(d));
     if (dateData.length < 3) return null;
 
     let year = dateData[0];
@@ -143,9 +170,11 @@ export default class Calendar extends Component {
     return { year, month, date };
   };
 
+  /* This is a function that takes a month number and returns the month string. */
   getMonthStr = (month) =>
     this.monthMap[Math.max(Math.min(11, month), 0)] || "Month";
 
+  /* This is a function that takes a timestamp and returns a date string. */
   getDateStringFromTimestamp = (timestamp) => {
     let dateObject = new Date(timestamp);
     let month = dateObject.getMonth() + 1;
@@ -159,6 +188,7 @@ export default class Calendar extends Component {
     );
   };
 
+  /* This is a function that takes a date object and sets the selected day to the timestamp of the date. */
   setDate = (dateData) => {
     let selectedDay = new Date(
       dateData.year,
@@ -171,6 +201,7 @@ export default class Calendar extends Component {
     }
   };
 
+  /* This is a function that takes the value of the input and sets the date to the date picker. */
   updateDateFromInput = () => {
     let dateValue = inputRef.current.value;
     let dateData = this.getDateFromDateString(dateValue);
@@ -184,11 +215,16 @@ export default class Calendar extends Component {
     }
   };
 
+  /* This is a function that takes a timestamp and sets the value of the input to the date string. */
   setDateToInput = (timestamp) => {
     let dateString = this.getDateStringFromTimestamp(timestamp);
     inputRef.current.value = dateString;
   };
 
+  /* This is a function that is called when the user clicks on a date. It sets the selected day to the
+timestamp of the day that was clicked. Then, it calls the setDateToInput function and passes the
+timestamp of the day that was clicked. Finally, it checks if the onChange prop is defined and if so,
+it calls the onChange function and passes the timestamp of the day that was clicked. */
   onDateClick = (day) => {
     this.setState({ selectedDay: day.timestamp }, () =>
       this.setDateToInput(day.timestamp)
@@ -198,6 +234,9 @@ export default class Calendar extends Component {
     }
   };
 
+  /* This is a function that takes an offset and sets the year to the current year plus the offset. Then,
+it sets the month to the current month. Finally, it sets the state to the year and the month
+details. */
   setYear = (offset) => {
     let year = this.state.year + offset;
     let month = this.state.month;
@@ -207,6 +246,9 @@ export default class Calendar extends Component {
     });
   };
 
+  /* This is a function that takes an offset and sets the month to the current month plus the offset.
+Then, it sets the year to the current year. Finally, it sets the state to the year, the month, and
+the month details. */
   setMonth = (offset) => {
     let year = this.state.year;
     let month = this.state.month + offset;
@@ -224,6 +266,7 @@ export default class Calendar extends Component {
     });
   };
 
+  /* Rendering the calendar Body. */
   renderCalendar() {
     let days = this.state.monthDetails.map((day, index) => {
       return (
@@ -267,7 +310,7 @@ export default class Calendar extends Component {
             ref={inputRef}
           />
         </div>
-        {true ? (
+        {this.state.showDatePicker ? (
           <div className="mdp-container">
             <div className="mdpc-head">
               <div className="mdpch-button">
@@ -299,9 +342,7 @@ export default class Calendar extends Component {
             </div>
             <div className="mdpc-body">{this.renderCalendar()}</div>
           </div>
-        ) : (
-          ""
-        )}
+        ) : null}
       </div>
     );
   }
